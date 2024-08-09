@@ -1,0 +1,24 @@
+public Node deleteNode(Node head, int x) {
+        if(head == null || x<=0){
+            return null;
+        }
+        
+        Node current = head;
+        
+        for(int i=1;current != null && i<x;i++){
+            current = current.next;
+        }
+        
+        if(current == head){
+            head = current.next;
+        }
+        
+        if(current.prev != null){
+            current.prev.next = current.next;
+        }
+        
+        if(current.next != null){
+            current.next.prev = current.prev;
+        }
+        return head;
+    }
