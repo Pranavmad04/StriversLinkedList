@@ -1,0 +1,73 @@
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        // Stack<Integer> st = new Stack<>();
+        // ListNode temp = head;
+        // while(temp != null){
+        //     st.push(temp.val);
+        //     temp = temp.next;
+        // }
+        // temp = head;
+        // while(temp != null){
+        //     if(st.peek() == temp.val){
+        //         st.pop();
+        //         temp = temp.next;
+        //         if(st.isEmpty()){
+        //             return true;
+        //         }
+        //     }
+        //     else{
+        //         return false;
+        //     }
+        // }
+        // return false;
+
+        if(head == null || head.next == null){
+            return true;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode newHead = reverseLL(slow.next);
+        ListNode first = head;
+        ListNode second = newHead;
+        while(second != null){
+            if(first.val != second.val){
+                reverseLL(newHead);
+                return false;
+            }
+            first = first.next;
+            second = second.next;
+        }
+        reverseLL(newHead);
+        return true;
+    }
+    static ListNode reverseLL(ListNode head){
+        //iterative approch
+        // if(head == null || head.next == null){
+        //     return head;
+        // }
+        // ListNode current = head;
+        // ListNode last = null;
+        // while(current != null){
+        //     ListNode front = current.next;
+        //     current.next = last;
+        //     last = current;
+        //     current = front;
+        // }
+        // return last;
+
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode newHead = reverseLL(head.next);
+        ListNode front = head.next;
+        front.next = head;
+        head.next = null;
+        return newHead;
+    }
+}
